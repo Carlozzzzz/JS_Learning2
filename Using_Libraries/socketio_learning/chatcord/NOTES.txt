@@ -1,0 +1,27 @@
+## Tutorial
+https://www.youtube.com/watch?v=jD7FnbI76Hg&t=73s
+
+## This will create the package
+
+npm init
+desc : Realtime chat app with rooms
+author: Carlos P
+license: MIT
+
+## install dependencies
+
+npm install express socket.io moment
+npm install -D nodemon
+
+
+## then on "scripts" at package.json
+"scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+
+
+## Run
+
+open index.html
+run `npm run dev` in your cmd inside the directory your working 
