@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 6 - DOM Manipulation</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+
+    <h1>Day 6 - DOM Manipulation</h1>
+    <p>Open console to see the result...</p>
+    <p>Refresh the page...</p>
+
+    <a href="color-changer.html">Exercise 1</a>
+
+    <div style="margin-top: 60px">
+        <h2>DOM Test</h2>
+
+        <p id="paragraphID">Manipulate Me!</p>
+
+        <p class="text">Test</p>
+        <p class="text">Test</p>
+        <p class="text">Test</p>
+        <p class="text">Test</p>
+    </div>
+
+    <script>
+        console.log('Day 6 - DOM Manipulation');
+
+        // HTML Tags
+        /*
+        html
+        head
+        title
+        body
+        footer
+
+        ## commonly used
+        p
+        b
+        div
+        span
+        img
+        
+        */
+    </script>
+
+    <script>
+        // Event Handlers
+        let paragraphID = document.getElementById('paragraphID');
+
+        window.onload = function() {
+
+            console.log("Loaded")
+
+            paragraphID = document.getElementById('paragraphID');
+            paragraphID.addEventListener('mouseover', function() {
+                this.style.cursor = "pointer";
+                this.innerText = "Carlos";
+                this.style.color = "red";
+                console.log(document.URL);
+            });
+
+            paragraphID.addEventListener('mouseout', () => {
+                paragraphID.innerText = "Manipulate Me!";
+                paragraphID.style.color = "black";
+
+            });
+
+
+            // looping though each element
+            let testArr = document.querySelectorAll("p.text");
+            testArr.forEach((x, i) => {
+                x.innerText += i;
+            });
+        }
+    </script>
+</body>
+
+</html>

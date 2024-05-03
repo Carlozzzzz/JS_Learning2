@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 5 - Palindrome Check</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+
+    <h1>Palindrome Check</h1>
+    <p>Open console to see the result...</p>
+    <p>Refresh the page...</p>
+
+    <script>
+        let sampleName = "          12213       ";
+        let regExp = /\p{P}/gu;
+
+        // isPalindrome(sampleName);
+
+        function isPalindrome(name){
+            name = name.toLowerCase().trim();
+            let found = regExp.test(sampleName);
+            let result = found ? "Yes" : "No";
+            
+            
+            if( ! found && name.length > 2) {
+                let nameToArr = Array.from(name);
+
+                let result = isSameBeginEnd(nameToArr) ? "Yes" : "No";
+                console.log("Is Palindrome? " , result);
+            } else {
+                console.log("Character is not vald.");
+            }
+
+        }
+
+        function isSameBeginEnd(arr) {
+            let flag = false;
+            while (arr.length > 2) {
+                let firstLetter = arr[0];
+                let lastLetter = arr[arr.length - 1];
+                
+                if (firstLetter === lastLetter) {
+                    flag = true;
+                } else if(firstLetter !== lastLetter)
+                {
+                    flag = false;
+                }
+                arr.shift();
+                arr.pop();
+                
+                console.log(arr);
+            }
+            return flag;
+        }
+    </script>
+
+    <script>
+        let name = "carlosagasi";
+       
+        reverseString(name);
+
+        function reverseString(str) {
+            let result = str.split('').reverse().join('');
+            console.log(str + " - " +result);
+        }
+    </script>
+</body>
+
+</html>

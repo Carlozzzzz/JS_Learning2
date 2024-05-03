@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Day 6 - Element Selection</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+    
+    <h1>Exercise 1 Element Selection</h1>
+    <p>Open the console to see the result...</p>
+    <p>Refresh the page.</p>
+
+
+    <div style="margin-top: 40px;">
+        <button id="targetElem">Target Element</button>
+    </div>
+
+    <script>
+        // Excecise 1
+        window.onload = () => {
+
+            // Initialyze Variables
+            let targetElem = document.getElementById('targetElem');
+
+            targetElem.addEventListener('click', function() {
+
+                const classes = ['color-default', 'color-1', 'color-2', 'color-3', 'color-4'];
+                const random = Math.floor(Math.random() * 9);
+                
+                const randomColor = classes.find((color) => color === classes[random]);
+                if(randomColor) {
+                    this.classList.remove(...classes);
+                    this.classList.add(randomColor);
+                } else {
+                    alert('Color not found.');
+                }
+
+            });
+
+            learningMapping();
+
+            function learningMapping() {
+                const classes = ['color-default', 'color-1', 'color-2', 'color-3', 'color-4', 'color-4'];
+                let defaultColor = "color-4";
+                const isColor = classes.find((item) => item === defaultColor);
+                const count = classes.filter((item) => item === defaultColor).length;
+                const result = isColor ? `Color has found. It occurs ${count} times.` : 'Cannot identify the color.';
+
+                console.log(result);
+                
+            }
+        }
+        
+    </script>
+</body>
+</html>

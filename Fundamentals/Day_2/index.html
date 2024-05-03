@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 - Conditional Statement</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+
+    <h1>Conditional Statement</h1>
+    <p>Open console to see the result...</p>
+    <p>Refresh the page...</p>
+
+    <a href="loops.html">Loops</a>
+    <a href="exercise.html">Exercise</a>
+    <script>
+        // Conditional Statements
+        // If Statements => if(){ ... }
+
+        var name = "chen";
+        if(!name) {
+            console.log(`Something is wrong.`);
+        } else if(name != "carlos") {
+            console.log(`Another name has been found : '${name}'`);
+        } else {
+            console.log(`Name: ${name}`);
+        }
+
+    </script>
+
+    <script>
+        // Comparison Operators
+        // > < >= <= === !==
+
+        var student1 = "carlos";
+        var student2 = "Carlos";
+
+        var teenAge = 18;
+        var matureAge = 20;
+        var motherAge = 27;
+
+        var yourName = prompt("Please enter your name: ");
+        var currentAge = parseInt(prompt("Please enter your age: "));
+
+        if(currentAge >= teenAge && currentAge < matureAge) {
+            console.log(`${yourName} is teenager.`);
+        } else if(currentAge >= matureAge && currentAge < motherAge) {
+            console.log(`${yourName} is matured.`);
+        } else if(currentAge >= motherAge) {
+            console.log(`${yourName} is fit to be a mother.`);
+        } else if(currentAge > 0 && currentAge < teenAge ) {
+            console.log(`${yourName} is underage. Don't gumber too much.`)
+        } else if(currentAge <= 0) {
+            console.log(`${yourName} is not yet Born.`)
+        } else if(currentAge == "" || yourName == ""){
+            console.log(`Empty Inputs. Please refresh the page.`);
+        } else {
+            console.log(`Something is wrong.`);
+        }
+
+        // using === and !==
+        console.log("Using == vs ===");
+        if(yourName == student1) {
+            console.log(`Same, not case sensitive: ${yourName} == ${student1}`);
+        } else {
+            console.log(`Not same: ${yourName} == ${student1}`);
+        }
+
+        if(yourName === student1) {
+            console.log(`Same, case sensive: ${yourName} === ${student1}`)
+        } else {
+            console.log(`Not same: ${yourName} === ${student1}`);
+        }
+
+        if(currentAge == "20") {
+            console.log(`Same, not case sensitive: ${currentAge} == "20"`);
+        } else {
+            console.log(`Not same: ${currentAge} == "20"`);
+        }
+
+        if(currentAge === "20") {
+            console.log(`Same, case sensive: ${currentAge} === "20"`)
+        } else {
+            console.log(`Not same: ${currentAge} === "20"`);
+        }
+
+        //  Nested if
+
+    </script>
+
+    <script>
+        // Nested if
+
+        var name = "carlos";
+        var age = 23;
+
+        if(name) {
+            console.log(`Name: ${name}`);
+
+            if(age) {
+                console.log(`Age: ${age}`);
+            } else {
+                console.log(`Something wrong with the age.`)
+            }
+        } else {
+            console.log(`Something wrong with the name.`);
+        }
+
+    </script>
+
+    <script>
+        // Tell if number is zero or negative
+        var number = parseInt(prompt("Type a number: "));
+        if(number > 0) {
+            console.log(`${number}: positive`);
+        } else if(number == 0) {
+            console.log(`${number}: zero`);
+        } else if(number < 0) {
+            console.log(`${number}: negative`);
+        } else {
+            console.log("Something is wrong.");
+        }
+    </script>
+
+    <script>
+        // Switch
+        console.log("");
+        var name = "not me";
+        switch (name) {
+            case "carlos":
+                console.log("That's my name.");
+                break;
+            case "her":
+                console.log("Somebodies name.");
+                break;
+            default:
+                console.log("Not on the list.");
+                break;
+        }
+    </script>
+</body>
+
+</html>

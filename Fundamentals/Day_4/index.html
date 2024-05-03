@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4 - Arrays</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+
+    <h1>Arrays</h1>
+    <p>Open console to see the result...</p>
+    <p>Refresh the page...</p>
+
+    <a href="exercise1.html">Exercise 1</a>
+    <a href="arrayoperation.html">Array Operation</a>
+   
+    <script>
+        // Simple Arrays
+        console.log(`-- Simple Array --`)
+        let cars = [];
+        let cars2 = ["Car1", "Car2"];
+        let cars3 = new Array("Saab", "Carssss");
+
+        console.log(cars);
+
+        // accessing array
+        console.log(cars2[0]);
+        console.log('------------------');
+    </script>
+
+    <script>
+        console.log("\n \n")
+        console.log("-- Array Names --");
+
+        let names = ["      carlos gasssisiisisi", "romulo", "Maralit"];
+        for(let i = 0; i < names.length; i++) {
+            // console.log("\t" + names[i]);
+
+            let name = names[i].trim();
+            name = name[0].toUpperCase() + name.substring(1);
+            console.log("\t" + name + " : " + name.length + " letters.");
+            // console.log("\t" + name + " : " + countWords(name) + " words.");
+        }
+
+        function countWords(str) {
+            const arr = str.split(' ');
+            return arr.filter(word => word !== '').length;
+        }
+        console.log('------------------');
+    </script>
+
+    <script>
+        // String trim
+        console.log("\n \n");
+        console.log("-- String Manipulation --");
+        let name = "             carlos      ";
+        console.log(`Not trimmed: ${name}`);
+        console.log(`Trimmed: ${name.trim()}`);
+        console.log('------------------');
+    </script>
+
+    <script>
+        // Displaying Array by Length
+        console.log("\n \n");
+        console.log("-- Displaying Array by length --");
+        let names2 = ["carlos gasssisiisisi", "romulo", "Maralit"];
+        names2.sort((a, b) => a.length -b.length);
+        console.log(names2);
+    </script>
+
+    <script>
+        let arrayNames = ["Carla", "Carlo", "Carl", "Ligaleg", "Carlos"];
+
+        let nameInput = prompt("Search this name: ");
+
+        alert(nameExists(arrayNames, nameInput));
+
+        function nameExists(arr, searchName) {
+            let flag;
+            for (let i = 0; i < arr.length; i++) {
+                if(searchName.toLowerCase() === arr[i].toLowerCase()) {
+                    flag = true;
+                    break;
+                } else {
+                    flag = false;
+                }
+            }
+
+            return flag;
+        }
+    </script>
+</body>
+
+</html>

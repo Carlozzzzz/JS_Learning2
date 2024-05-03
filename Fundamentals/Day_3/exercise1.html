@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day3 Exercise</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+    
+    <h1>Exercise 1</h1>
+    <p>Open the console to see the result...</p>
+    <p>Refresh the page.</p>
+
+    <script>
+        // Define a function 
+        let number = prompt("Please enter a positive number:");
+        let result = calculateFactorial(number);
+        alert(`Result: ${result}`);
+
+        function calculateFactorial(number) {
+            let result;
+            if(number % 2 == 0) {
+                for(let i = 0; i <= number; i++) {
+                    result = number * i;
+                }
+            } else if(number % 2 == 1) {
+                result = "Odd number, try again.";
+            } else {
+                result = "Something is wrong.";
+            }
+
+            return result;
+        }
+    </script>
+</body>
+</html>

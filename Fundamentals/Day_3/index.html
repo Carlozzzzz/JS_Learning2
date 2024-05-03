@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3 - Functions</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+
+    <h1>Functions</h1>
+    <p>Open console to see the result...</p>
+    <p>Refresh the page...</p>
+
+    <a href="exercise1.html">Exercise 1</a>
+    <a href="parameter.html">Function Parameter</a>
+    <script>
+        // Functions
+
+        function testFunction() {
+            console.log("This is my test function.");
+
+        }
+
+        // calling out the function
+        testFunction();
+    </script>
+    
+    <script>
+        // Factorial with Functions
+        var evenNum = parseInt(prompt("Enter an even number: "));
+
+        factorialCalc(evenNum);
+
+        function factorialCalc(num) {
+            if (num % 2 == 0) {
+                console.log("Even");
+                let sum = 0;
+                for(let i = 0; i <= num; i++) {
+                    sum = num * i;
+                }
+                console.log(`Factorial of ${num} : ${sum}`);
+            } else if(num % 2 == 1) {
+                console.log("Odd");
+            } else {
+                console.log("Something is wrong.");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

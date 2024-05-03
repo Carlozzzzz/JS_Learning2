@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4 Exercise</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+    
+    <h1>Exercise 1</h1>
+    <p>Open the console to see the result...</p>
+    <p>Refresh the page.</p>
+
+    <script>
+        // Create array here
+        let arrNames = ["Carla", "carlo", "Carl", "Ligaleg", "Carlos"];
+
+        // sort the array
+        arrNames = arrNames.sort((a, b) => a.length - b.length );
+
+        // display the array using loop
+        for (let i = 0; i < arrNames.length; i++) {
+            let name = arrNames[i];
+            arrNames[i] = name[0].toUpperCase() + name.substring(1);
+            console.log(`${i} : ${arrNames[i]}`);
+        }
+
+        // ask user for input
+        let nameInput = prompt("Search name: ");
+
+        // running the function
+        alert(searchWord(arrNames, nameInput));
+
+
+        function searchWord(arr, searchName) {
+            let isMatch;
+            for (let i = 0; i < arr.length; i++) {
+                if(searchName.toLowerCase() === arr[i].toLowerCase()) {
+                    isMatch = true;
+                    break;
+                } else {
+                    isMatch = false;
+                }
+                console.log(isMatch);
+                
+            }
+            return isMatch;
+        }
+    </script>
+</body>
+</html>

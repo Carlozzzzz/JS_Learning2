@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4 Array Operation</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+
+    <h1>Array Operations</h1>
+    <p>Open console to see the result...</p>
+    <p>Refresh the page...</p>
+
+    <a href="exercise2.html">Exercise 1</a>
+    <!-- <a href="parameter.html">Function Parameter</a> -->
+
+    <script>
+        // Array Operations
+        arrNumbers = [6, 5, 8, 3, 26, 29];
+        var edgeNumber = parseInt(prompt(`Enter a number between: 0 and ${arrNumbers.length}`));
+        if(!edgeNumber || edgeNumber > arrNumbers.length || edgeNumber != "stop") {
+            alert("Invalid input, Try again or 'stop'");
+            edgeNumber = parseInt(prompt(`Enter a number between: 0 and ${arrNumbers.length}`));
+        }
+
+        const result = findMaxAndMin(arrNumbers);
+
+        console.log("MIN: " + result.minNumber);
+        console.log("MAX: " + result.maxNumber);
+
+        function findMaxAndMin(arr) {
+
+            let minNum = arr[0];
+            let maxNum = arr[0];
+
+            for(let i = 0; i < arr.length; i++) {
+                
+                if(arr[i] < minNum) {
+                    minNum = arr[i]; 
+                }
+
+                if (arr[i] > maxNum) {
+                    maxNum = arr[i]; 
+
+                }
+
+                if(i == edgeNumber) {
+                    break;
+                }
+            }
+            return {
+                minNumber : minNum,
+                maxNumber : maxNum
+            };
+        }
+    </script>
+</body>
+
+</html>

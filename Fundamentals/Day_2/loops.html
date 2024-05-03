@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 Loops</title>
+</head>
+<body>
+    <a href="index.html" style="margin-right: 10px;">back</a>
+	<a href="http://jspracticecarlos.atwebpages.com/">home</a>
+	<br>
+
+    <h1>Day 2 Loops</h1>
+    <p>Open console to see the results... </p>
+
+    <a href="exercise.html">Exercise</a>
+
+    <script>
+        // Loops basics
+
+        // var number = parseInt(prompt("Enter random number: "));
+
+        // for(let i = 0; i < number; i++) {
+        //     console.log(`Number: ${i}.`);
+        // }
+
+        // using break
+        // console.log("\nUsing break");
+        // for (let i = 0; i < 10; i++) {
+        //     if(true) {
+        //         if(i == 3) {
+        //             console.log("Stopping the execution of the loop.");
+        //             console.log("This will execute even you have nested condition.");
+        //             break;
+        //         }
+        //     }
+        //     console.log(`Counter: ${i}`);
+        // }
+
+        // // using 
+        // console.log("\nUsing continue");
+        // for (let i = 0; i < 10; i++) {
+        //     if(true) {
+        //         if(i == 3) {
+        //             console.log("\t{Skipping the loop that meets the condition.");
+        //             console.log("\tThis will execute even you have nested condition.}");
+        //             continue;
+        //         }
+        //     }
+        //     console.log(`Counter: ${i}`);
+        // }
+
+
+        // // nested loop
+        // console.log("Nested Loop");
+        // var inputNum = parseInt(prompt("Enter a number: "));
+        // for(let i = 0; i < inputNum; i++) {
+        //     console.log("Loop: " + i);
+
+        //     for(let i = 0; i < 5; i++) {
+        //         console.log("\tDisplaying items inside: " + i);
+        //     }
+        // }
+    </script>
+
+    <script>
+        // Fibonnaci sequence
+
+        let startPoint = parseInt(prompt("Enter starting point: "));
+        let firstNum = 0;
+        let secondNum = 1;
+        let nextTerm;
+        for(let i = 0; i <= startPoint; i++) {
+            
+           console.log(firstNum);
+           nextTerm = firstNum + secondNum;
+           firstNum = secondNum;
+           secondNum = nextTerm;
+        }
+    </script>
+</body>
+</html>
