@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Video Gallery</h1>
+        
+        <div class="video-container">
+            <div class="video"><video src="images/login.mp4" muted></video></div>
+            <div class="video"><video src="images/tiktaktoe.mp4" muted></video></div>
+            <div class="video"><video src="images/todo.mp4" muted></video></div>
+        </div>
+
+        <div class="popup-video">
+            <span>&times;</span>
+            <video src="images/login.mp4" muted autoplay controls></video>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.video-container video').forEach(vid => {
+            vid.onclick = () => {
+                console.log(vid);
+                document.querySelector('.popup-video').style.display = "block";
+                document.querySelector('.popup-video video').src = vid.getAttribute('src');
+            };
+
+        });
+
+        document.querySelector('.popup-video span').onclick = () => {
+            document.querySelector('.popup-video').style.display = "none";
+        };
+    </script>
+</body>
+</html>
