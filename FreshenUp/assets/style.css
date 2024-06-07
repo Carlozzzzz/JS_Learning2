@@ -1,0 +1,89 @@
+body {
+    background: #f1f1f1;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #3498db;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+h3 {
+    color: #36393a;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    color: #3498db;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+a:hover {
+    background-color: #3498db;
+    color: #ffffff;
+}
+
+p {
+    margin: 0;
+}
+
+ol li {
+    margin-bottom: 5px;
+}
+
+
+
+/* Global Classes */
+.container-main {
+    margin: 20px 10%;
+    padding: 15px 20px;
+    background-color: #f0f0f0;  /* Background color of the container */
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Shadow effect */
+}
+
+.container-header {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    width: 50%;
+
+}
+
+.container-header a {
+    border: none;
+}
+
+.container-header a.active-header{
+    color: #299dea;
+    text-decoration: underline;
+    font-size: 1.2em;
+}
+
+.container-header a.active-header:hover {
+    background-color: #3498db;
+    color: #ffffff;
+}
+
+div.definition {
+    background: #313864;
+    color: white;
+    padding: 3px;
+    padding: 10px;
+    width: 50%;
+    margin-top: 3px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.link-left-margin-5 {
+    margin-left: 5px;
+}
