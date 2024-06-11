@@ -9,8 +9,8 @@
 <body>
     <div class="slot-header">
         <div class="money-logo"></div>
-        <div class="total-earnings">Accounts: <span>0.00</span></div>
-        <button class="deposit-button">Deposit Money</button>
+        <div class="total-earnings">Accounts: <span id="currentBalanceOutput">0.00</span></div>
+        <button id="depositButton" class="deposit-button">Deposit Money</button>
     </div>
       
 
@@ -37,18 +37,18 @@
     <div class="bet-start-container">
 
         <div class="bet-details">
-            <button class="minus-button">-</button>
+            <button id="minusBetButton" class="minus-button">-</button>
             <div class="bet-amount-container">
                 <span class="bet-header">TOTAL BET</span>
-                <span class="bet-amount">0</span>
+                <input id="betAmountInput" type="number" name="betAmountInput" class="bet-amount numberonly" placeholder="0" value="0"></input>
             </div>
-            <button class="add-button">+</button>
+            <button id="addBetButton" class="add-button">+</button>
         </div>
     
         <div class="slot-circle slot-maxbet">
             <div class="outer-circle">
                 <div class="inner-circle">
-                    <span class="text">Max Bet</span>
+                    <span id="maxBetButton" class="text">Max Bet</span>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
         <div class="slot-circle slot-start">
             <div class="outer-circle">
                 <div class="inner-circle">
-                    <div class="text">Start</div>
+                    <div id="betStartButton" class="text">Start</div>
                 </div>
             </div>
         </div>
@@ -64,5 +64,6 @@
     </div>
 </body>
 
-<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/global.js"></script>
+<script type="module" src="assets/js/main.js"></script>
 </html>
