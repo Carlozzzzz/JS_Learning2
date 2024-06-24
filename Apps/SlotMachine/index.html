@@ -8,57 +8,94 @@
 </head>
 <body>
     <div class="slot-header">
-        <div class="money-logo"></div>
-        <div class="total-earnings">Accounts: <span id="currentBalanceOutput">0.00</span></div>
-        <button id="depositButton" class="deposit-button">Deposit Money</button>
+        <div class="balance outer-div">
+            <div class="inner-div">
+                <div class="balance-amount text-amount">
+                    <span id="currentBalanceOutput" class="current-balance">Balance $</span>
+                </div>
+                <div class="balance-logo text-logo">
+                    <span class="logo"><img class="gold-img" src="assets/images/gold.png" alt=""> </span>
+                </div>
+            </div>
+        </div>
+        <div id="depositButton" class="deposit-button">
+            DEPOSIT MONEY
+        </div>
+        <div class="winnings outer-div">
+            <div class="inner-div">
+                <div class="winnings-amount text-amount">
+                    <span id="currentWinningsOutput" class="current-winnings">Winnings $</span>
+                </div>
+                <div class="winnings-logo text-logo">
+                    <span class="logo"><img class="gold-img" src="assets/images/gold.png" alt=""> </span>
+                </div>
+            </div>
+        </div>
     </div>
       
 
-    <div class="slot-container">
-        <div class="slot-row slot-row-1">
-            <div class="slot-box box-1">1</div>
-            <div class="slot-box box-2">2</div>
-            <div class="slot-box box-3">3</div>
-        </div>
-
-        <div class="slot-row slot-row-2">
-            <div class="slot-box box-4">4</div>
-            <div class="slot-box box-5">5</div>
-            <div class="slot-box box-6">6</div>
-        </div>
-
-        <div class="slot-row slot-row-3">
-            <div class="slot-box box-7">7</div>
-            <div class="slot-box box-8">8</div>
-            <div class="slot-box box-9">9</div>
+    <div class="slot-body outer-shadow">
+        <div class="inner-shadow">
+            <div class="slot-container">
+                <div class="slot-row slot-row-1">
+                    <div class="slot-box box-1">1</div>
+                    <div class="slot-box box-2">2</div>
+                    <div class="slot-box box-3">3</div>
+                </div>
+        
+                <div class="slot-row slot-row-2">
+                    <div class="slot-box box-4">4</div>
+                    <div class="slot-box box-5">5</div>
+                    <div class="slot-box box-6">6</div>
+                </div>
+        
+                <div class="slot-row slot-row-3">
+                    <div class="slot-box box-7">7</div>
+                    <div class="slot-box box-8">8</div>
+                    <div class="slot-box box-9">9</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="bet-start-container">
+    <div class="slot-footer bet-start-container outer-shadow">
+        <div class="inner-shadow">
 
-        <div class="bet-details">
-            <button id="minusBetButton" class="minus-button">-</button>
-            <div class="bet-amount-container">
+            <div class="footer-content bet-win">
+                <p class="bet-win-label">WIN</p>
+                <div class="bet-win-container outer-container">
+                    <div class="inner-container">
+                        <p class="bet-win-output numberonly">10.000</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-content bet-details">
                 <span class="bet-header">TOTAL BET</span>
-                <input id="betAmountInput" type="number" name="betAmountInput" class="bet-amount numberonly" placeholder="0" value="0"></input>
+                <div class="bet-details-container">
+                    <button id="minusBetButton" class="bet-details-button minus-button"><span>-</span></button>
+                    <div class="bet-amount-container">
+                        <input id="betAmountInput" type="number" name="betAmountInput" class="bet-amount numberonly" placeholder="0" value="0"></input>
+                    </div>
+                    <button id="addBetButton" class="bet-details-button add-button"><span>+</span></button>
+                </div>
             </div>
-            <button id="addBetButton" class="add-button">+</button>
-        </div>
+        
+            <!-- <div class="footer-content slot-circle slot-maxbet">
+                <div class="outer-circle">
+                    <div class="inner-circle">
+                        <span id="maxBetButton" class="text">Max Bet</span>
+                    </div>
+                </div>
+            </div>
     
-        <div class="slot-circle slot-maxbet">
-            <div class="outer-circle">
-                <div class="inner-circle">
-                    <span id="maxBetButton" class="text">Max Bet</span>
+            <div class="footer-content slot-circle slot-start">
+                <div class="outer-circle">
+                    <div class="inner-circle">
+                        <div id="betStartButton" class="text">Start</div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="slot-circle slot-start">
-            <div class="outer-circle">
-                <div class="inner-circle">
-                    <div id="betStartButton" class="text">Start</div>
-                </div>
-            </div>
+            </div> -->
         </div>
        
     </div>

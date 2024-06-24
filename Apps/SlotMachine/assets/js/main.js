@@ -13,6 +13,7 @@
 
 // main.js
 import { Balance } from './Balance.js';
+import { SlotMachine } from './slotmachine.js';
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -32,10 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("The transaction is successfully completed.");
         }
 
-        const currentBalance = balance.getBalance();
+        const userBalance = balance.getBalance();
 
         if (currentBalanceOutput) {
-            currentBalanceOutput.innerHTML = currentBalance;
+            currentBalanceOutput.innerHTML = userBalance;
         } else {
             console.error("Element with id 'currentBalanceOutput' not found.");
         }
@@ -50,11 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const maxBetButton = document.getElementById("maxBetButton");
 
     addBetButton.addEventListener("click", () => {
-        const currentBalance = balance.getBalance();
+        const userBalance = balance.getBalance();
 
         let currentBetAmount = betAmountInput.value;
 
-        if(currentBetAmount < currentBalance) {
+        if(currentBetAmount < userBalance) {
             betAmountInput.value++;
         }
     });
@@ -66,10 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     maxBetButton.addEventListener("click", () => {
-        const currentBalance = balance.getBalance();
+        const userBalance = balance.getBalance();
         
-        if(currentBalance) {
-            betAmountInput.value = currentBalance;
+        if(userBalance) {
+            betAmountInput.value = userBalance;
         }
     });
 
@@ -78,13 +79,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const betStartButton = document.getElementById("betStartButton");
 
     betStartButton.addEventListener("click", () => {
-        // start the animation here
-        // get the bet amount
-        // get the balance amount
-        // get the array of items (slot of boxes)
-        // display the end results of animation
-        // display the winning row/s
-        // update the currentBalance (win/lose)
+
+        const betAmount = parseInt(betAmountInput.value);
+        const userBalance = balance.getBalance();
+        const rowCount = document.querySelectorAll(".slot-container .slot-row").length;
+
+        if(betAmount > userBalance) {
+            alert("Insufficient balance.");
+            return;
+        } else {
+            balance.deductBalance(betAmount);
+        }
+
+
+        const slotmachine = new SlotMachine(betAmount, userBalance, rowCount);
+
+        const result = slotmachine.spinWheel();
+
+        if(result.price > 0 && result.price) {
+            const winnings = result.price + betAmount;
+
+            balance.addBalance(winnings);
+        }
+
+        currentBalanceOutput.innerHTML = balance.getBalance();
         
     });
 

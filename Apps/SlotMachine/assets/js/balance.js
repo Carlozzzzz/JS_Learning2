@@ -1,6 +1,6 @@
 export class Balance {
     constructor(initialBalance) {
-        this.userBalance = initialBalance;
+        this.userBalance = parseInt(initialBalance);
     }
 
     deposit() {
@@ -15,6 +15,14 @@ export class Balance {
 
     getBalance() {
         return this.userBalance;
+    }
+
+    addBalance(winnings) {
+        return this.userBalance += parseInt(winnings);
+    }
+
+    deductBalance(losingPrice) {
+        this.userBalance -= losingPrice;
     }
 
     displayBalance() {

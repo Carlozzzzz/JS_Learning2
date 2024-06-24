@@ -1,43 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 body, html {
     background-color: rgb(205, 213, 243);
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    background: #351228;
+    height: 100vh;
+    box-sizing: border-box;
+
+}
+
+p {
+  margin-bottom: 0;
 }
 
 /* Slot header */
 .slot-header {
     display: flex;
     justify-content: space-between;
+    position: relative;
     align-items: center;
-    height: 80px; /* Adjust height as needed */
+    height: 10vh; /* Adjust height as needed */
+    width: 60%;
+    margin: auto;
     padding: 0 20px; /* Add padding for better spacing */
     background-color: #333; /* Header background color */
+    background: #351228;
     color: #fff; /* Text color */
+    box-sizing: border-box;
   }
   
-  .money-logo {
-    width: 50px; /* Adjust width as needed */
-    height: auto; /* Maintain aspect ratio */
+  /* ------------------------ */
+  /* Slot Header General */
+
+  .slot-header .outer-div{
+    border: 2px solid #FFC777;
+    min-width: 250px;
+    border-radius: 35px;
+    display: flex;
+    justify-content: center;
   }
-  
-  .total-earnings {
-    font-size: 1.3rem; /* Adjust font size as needed */
+
+  .slot-header .outer-div .inner-div {
+    border: 2px solid #BA4E36;
+    background-image: linear-gradient(#F7983C,#FBC043,#FBC043, #F7983C);
+    border-radius: 35px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .slot-header .inner-div .text-amount,
+  .slot-header .inner-div .text-logo {
+      background-image: linear-gradient(#AD10F5, #6102DF, #6102DF, #4C0377);
+      border-radius: 35px;
+      text-align: center;
+      font-weight: bold;
+  }
+
+  .slot-header .inner-div .text-amount{
+    padding: 5px 30px;
+    width: 35%;
+  }
+
+  .slot-header .inner-div .text-logo{
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .slot-header .text-logo .gold-img{
+    width: 18px; 
+  }
+
+  /* ------------------------------------------------ */
+
+  /* ------------------------------------------------ */
+  /* LEFT */
+ 
+
+  /* ------------------------------------------------ */
+  /* RIGHT */
+ 
+
+  /* ------------------------------------------------ */
+  /* MIDDLE */
+    #depositButton {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
     
-  }
-  
-  .total-earnings span{
-    font-weight: bold;
-  }
-  
-  .deposit-button {
-    padding: 10px 20px; /* Adjust padding as needed */
-    background-color: #4CAF50; /* Button background color */
-    color: #fff; /* Button text color */
-    border: none;
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Cursor on hover */
-  }
-  
+    .deposit-button {
+      font-family: "Archivo Black", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      text-transform: capitalize;
+      font-size: 2rem;
+      color: #fff; /* Button text color */
+      border: none;
+      cursor: pointer; /* Cursor on hover */
+      background: linear-gradient(to bottom, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+  /* END MIDDLE */
+
 
 /* Slot Machine */
 /* 
@@ -47,88 +123,227 @@ body, html {
     slot-box
     slot-box-1 ^ 9 
 */
-
-.slot-container {
-    display: grid;
-    height: 450px;
-    width: 600px;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns, each taking equal width */
-    grid-template-rows: repeat(3, 1fr); /* 3 rows, each taking equal height */
-    gap: 10px; /* Space between grid items */
-    /* border: 1px solid #000;  Optional: for visual debugging */
-    margin: auto;
-    margin-top: 50px;
+  .slot-body.outer-shadow {
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden; /* Hide overflow of inner elements */
+    margin: 2vh auto;
+    height: 66vh;
+    width: 45%;
+    border-radius: 45px;
+    background-color: transparent; /* Ensure background is transparent */
+    border: 3.5px solid #f21212c8; /* Devilish red border */
+    box-shadow: 
+        0 0 19px 3px rgba(246, 44, 44, 0.788); /* Simplified box shadow for outer glow */
   }
-  
+
+  .slot-body .inner-shadow {
+    height: 100%;
+    width: 100%;
+    border-radius: 30px;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 
+        0 0 3px 2px rgb(57, 39, 2);
+    background: rgb(248,159,61); /* Gradient background for inner shadow */
+    padding: 10px; /* Padding matches the border width */
+  }
+
+
+  .slot-container {
+      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
+      padding: 30px;
+      display: grid;
+      border-radius: 33px;
+      box-shadow: 
+          0 0 2px 1px rgb(66, 51, 1);
+      background-color: rgb(0, 0, 18); /* Solid background color for slot-container */
+      grid-template-columns: repeat(3, 1fr); /* 3 columns, each taking equal width */
+      grid-template-rows: repeat(3, 1fr); /* 3 rows, each taking equal height */
+      gap: 12px; /* Space between grid columns */
+  }
+
   .slot-row {
     display: contents; /* Ensures rows don't interfere with grid layout */
   }
   
   .slot-box {
-    background-color: #d6adad; /* Optional: for visual debugging */
-    border: 1px solid #ccc; /* Optional: for visual debugging */
+    /* Optional: for visual debugging */
+    /* background-color: #d6adad; */
+    border: 0px solid #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
-  }
-  
+    box-sizing: border-box;
+    color: white;
+    font-size: bold;
+    font-weight: 700;
+    /* Transparent background with shadow */
+    background-color: rgb(13,32,124); /* Adjust transparency as needed */
+    box-shadow: 
+      0 0 3.5px 3.5px rgba(242, 203, 6, 0.798);
+}
+
+
+  /* ---------------------------------------------------- */
+  /* ---------------------------------------------------- */
+  /* Slot Bet Details */
+
   /* Bet-Start */
-  .bet-start-container {
+  .slot-footer.outer-shadow {
+    margin: auto;
+    width: 100%;
+    box-sizing: border-box;
+    height: 20vh;
+  }
+
+  .slot-footer .inner-shadow {
+    background-color: rgb(89,66,175);
+    box-shadow: 
+        0 0 4px 2px rgba(42, 40, 33, 0.377);
+    height: 100%;
+    width: 60%;
+    margin: auto;
+    border-radius: 12px;
+    background-image: linear-gradient(#4c056d, #5d46cc, #4c056d);
     display: flex; /* Use flexbox to align bet details and slot start */
     align-items: center; /* Center vertically */
     justify-content: space-around;
-    margin: auto;
-    max-width: 600px;
   }
 
-  /* Slot Bet Details */
-  .bet-details {
+  .slot-footer .footer-content .bet-win {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
     
-    height: 35px;
+  }
+
+  .slot-footer .footer-content .bet-win-label {
+    text-align: center;
+    color: white;
+    font-weight: 400;
+  }
+
+  .slot-footer .bet-win .outer-container {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    padding: 3px;
+    border: 3.5px solid #face3f;
+    color: white;
+    box-shadow: 0 0 3px 3px rgba(42, 40, 33, 0.377);
+    background-color: #320448;
+    /* Gradient background */
+    /* background: linear-gradient(to right, #530072,  #530072, #DDA0DD); */
+  }
+
+  .slot-footer .bet-win .inner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 25px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 3px #5400728b;
+    background: linear-gradient(to right, #320448,  #5400728b,rgb(120, 11, 171));
+    font-size: 2.3rem;
+    font-weight: 900;
+  }
+
+  .slot-footer .bet-win p {
+    margin: 0;
+    padding: 0;
+  }
+
+
+
+  .slot-footer .bet-details {
     display: flex;
     align-items: center;
+    color: white;
   }
   
-  .bet-amount-container{
+  .slot-footer .bet-details .bet-amount-container{
     display: flex;
     align-items: center;
     flex-direction: column;
   }
 
-
-  .bet-details button {
-    height: 35px;
+  .slot-footer .bet-details button {
+    height: 55px;
     width: 35px;
-    border-radius: 100%;
-    background-color: #4CAF50; /* Button background color */
+    border-radius: 35%;
+    box-shadow: 
+        0 0 1.3px 1.3px #120b7a;
+    background: #1d12b0;
     color: #fff; /* Button text color */
     border: none;
     cursor: pointer; /* Cursor on hover */
+    font-size: 2.3rem;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
   }
   
+  .slot-footer .bet-details .bet-details-button {
+    position: relative;
+  }
   
-  .bet-amount {
+  .slot-footer .bet-details .minus-button span {
+    position: relative;
+    top: -6px; 
+  }
+
+  .slot-footer .bet-details .add-button span {
+    position: relative;
+    top: -2px; 
+  }
+
+  .slot-footer .bet-details .bet-amount {
     width: 100px;
     text-align: center;
     margin: 0 10px; /* Adjust margin as needed */
   }
 
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /* Slot Button */
   .slot-start, .slot-maxbet {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 250px; /* Centers the button vertically in the viewport */
+    height: 20vh; /* Centers the button vertically in the viewport */
   }
   
   .outer-circle {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px; /* Diameter of the outer circle */
-    height: 150px; /* Diameter of the outer circle */
+    width: 120px; /* Diameter of the outer circle */
+    height: 120px; /* Diameter of the outer circle */
     background-color: #4CAF50; /* Background color of the outer circle */
     border-radius: 50%; /* Makes the outer div a circle */
   }
@@ -149,8 +364,8 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 120px; /* Diameter of the inner circle */
-    height: 120px; /* Diameter of the inner circle */
+    width: 100px; /* Diameter of the inner circle */
+    height: 100px; /* Diameter of the inner circle */
     background-color: #FFFFFF; /* Background color of the inner circle */
     border-radius: 50%; /* Makes the inner div a circle */
   }
