@@ -1,0 +1,80 @@
+/* Global elements */
+
+:root {
+    --blue: blue;
+    --red: red;
+    --green: green;
+    --orange: orange;
+}
+
+body{
+    font-family: 'Courier New', Courier, monospace;
+    color: red;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    
+}
+
+h2 {
+    text-align: center;
+    font-size: 4rem;
+    margin: 0;
+}
+
+.red {
+    background-color: var(--red) !important;
+}
+
+.green {
+    background: var(--green) !important;
+}
+
+.blue {
+    background: var(--blue) !important;
+}
+
+.orange {
+    background: var(--orange) !important;
+}
+
+/* Class based */
+.container {
+    display: flex;
+    margin: 25px 10%;
+    padding: 10px;
+    height: 50vh;
+    background: grey;
+    justify-content: space-around;
+}
+
+
+.container .color-tab {
+    width: 30%;
+    display: flex;
+    justify-content: space-between; /* Optional, adjusts spacing */
+    align-items: center; /* Aligns items vertically */
+}
+
+.container .color-tab .colors {
+    flex: 1; /* Ensures equal width */
+    height: 50px; /* Set a height for visibility */
+    text-align: center; /* Centers text horizontally */
+    display: flex;
+    justify-content: center; /* Centers text horizontally */
+    align-items: center; /* Centers text vertically */
+    border: 1px solid #ccc; /* Optional for visibility */
+}
+
+
+
+
+.container .color-output {
+    width: 60%;
+    background-color: white;
+    transition: 0.5s;
+}
+
+
+

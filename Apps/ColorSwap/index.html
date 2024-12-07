@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Swap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Color Swap</h2>
+    <div class="container">
+        
+        <div class="color-tab" id="colorTab">
+            <div class="red colors"></div>
+            <div class="blue colors"></div>
+            <div class="green colors"></div>
+            <div class="orange colors"></div>
+        </div>
+        
+        <div class="color-output" id="colorOutput">
+            <!-- Change the color of this div according the hover state or click state -->
+        </div>
+    </div>
+    
+    <!-- JS -->
+    <script>
+        // create a function will loop through each of the color-tab
+        // add event that will change the bg of colorOutput on each div
+        
+        
+        const colors = document.querySelectorAll('.colors');
+        
+        const colorOutput = document.querySelector('#colorOutput');
+        
+        let lastColorClass = null;
+        
+        function resetColorClass(color) {
+            if(lastColorClass) {
+                colorOutput.classList.remove(lastColorClass);
+            }
+            
+            colorOutput.classList.add(color);
+
+            lastColorClass = color;
+        }
+        
+        colors.forEach(element => {
+            const color = element.classList[0];
+        
+            element.addEventListener('click', () => {
+                console.log('Event clicked: ', element)
+                resetColorClass(color);
+            })
+            
+            element.addEventListener('mouseover', () => {
+                console.log('Triggering hover: ', color)
+                resetColorClass(color);
+            });
+        });
+        
+    </script>
+
+</body>
+</html>
