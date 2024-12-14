@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Embed</title>
+    <link rel="stylesheet" href="assets/style.css">
+    
+</head>
+<body>
+    <div class="header">
+        <div>
+            <img class ="logo" src="files/box.png" alt="Logo">
+        </div>
+        <div class="nav">
+            <ul>
+                <li class="nav-item">Home</li>
+                <li class="nav-item">About</li>
+                <li class="nav-item">Categories</li>
+                <li class="nav-item">Others</li>
+            </ul>
+        </div>
+        <div class="login-btn">
+            <div class="user-logo">Logo Circle</div>
+        </div>
+        
+        <img class="toggle-bar" src="files/toggle.png" alt="toggle bar"></img>
+    </div>
+    
+    <script>
+        const toggleBar = document.querySelector('.toggle-bar');
+        const nav = document.querySelector('.nav');
+        const loginBtn = document.querySelector('.login-btn');
+
+        toggleBar.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            loginBtn.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+:root {
+
+    --nav-padding: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.active {
+    display: block !important;
+}
+
+.logo {
+    width: 45px;
+    height: auto;
+    padding: 0;
+}
+
+.toggle-bar {
+    width: 25px;
+    height: auto;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.header .nav {
+    display: none;
+    padding: var(--nav-padding);
+}
+
+.header .nav ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.header .nav li{
+    list-style: none;
+}
+
+.header .login-btn {
+    display: none;
+    padding: var(--nav-padding);
+}
+
+.header .toggle-bar{
+    position: absolute;
+    top: 27px;
+    right:  var(--nav-padding);
+}
+
+
+@media (min-width: 768px) {
+
+    .header  {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .header > div {
+        flex: 1;
+    }
+    
+    .header .nav{ 
+        flex: 2;
+        display: block;
+    }
+    
+    .header .nav ul {
+        flex-direction: row;
+        column-gap: 30px;
+        justify-content: center;
+    }
+    
+    
+    .login-btn{ 
+        display: flex !important;
+        justify-content: flex-end;
+    }
+    
+    .toggle-bar {
+        display: none;
+    }
+}
