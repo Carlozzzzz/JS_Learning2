@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizBeez</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <!-- **Other header stuffs here** -->
+    </header>
+    <div class="container">
+        <div class="quiz-container">
+            <div class="timer" id="timer">30</div>
+            <div class="question-count" id="question-count">Question 1/10</div>
+            <div class="question" id="question">What is the capital of France?</div>
+            <ul class="choices" id="choices">
+                <li class="choice">Berlin <img src="https://via.placeholder.com/20" alt="icon" class="icon"></li>
+                <li class="choice">Madrid <img src="https://via.placeholder.com/20" alt="icon" class="icon"></li>
+                <li class="choice">Paris <img src="https://via.placeholder.com/20" alt="icon" class="icon"></li>
+                <li class="choice">Rome <img src="https://via.placeholder.com/20" alt="icon" class="icon"></li>
+            </ul>
+            <div class="button-container">
+                <button class="button" id="prev-btn">Previous</button>
+                <button class="button" id="next-btn">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questionElement = document.getElementById('question');
+        const questionCountElement = document.getElementById('question-count');
+        const choicesElement = document.getElementById('choices');
+        const timerElement = document.getElementById('timer');
+        const nextButton = document.getElementById('next-btn');
+        const prevButton = document.getElementById('prev-btn');
+
+        let currentQuestionIndex = 0;
+        let timer = 30;
+        let timerInterval;
+
+        function loadQuestion(questionIndex) {
+            // Example data for demonstration purposes
+            const quizData = [
+                {
+                    question: 'What is the capital of France? ',
+                    choices: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+                    correct: 'Paris'
+                },
+                {
+                    question: 'What is 2 + 2?',
+                    choices: ['3', '4', '5', '6'],
+                    correct: '4'
+                },
+                {
+                    question: 'What is the capital of Japan?',
+                    choices: ['Seoul', 'Beijing', 'Tokyo', 'Bangkok'],
+                    correct: 'Tokyo'
+                }
+            ];
+
+            if (questionIndex < 0 || questionIndex >= quizData.length) {
+                return;
+            }
+
+            const currentQuestion = quizData[questionIndex];
+            questionElement.textContent = currentQuestion.question;
+            questionCountElement.textContent = `Question ${questionIndex + 1}/${quizData.length}`;
+            choicesElement.innerHTML = '';
+            currentQuestion.choices.forEach(choice => {
+                const li = document.createElement('li');
+                li.textContent = choice;
+                li.classList.add('choice');
+                const icon = document.createElement('img');
+                icon.src = 'https://via.placeholder.com/20';
+                icon.alt = 'icon';
+                icon.classList.add('icon');
+                li.appendChild(icon);
+                choicesElement.appendChild(li);
+            });
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            loadQuestion(currentQuestionIndex);
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentQuestionIndex--;
+            loadQuestion(currentQuestionIndex);
+        });
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timer = 3;
+            timerElement.textContent = timer;
+            timerInterval = setInterval(() => {
+            
+                timer--;
+                if (timer == 0) {
+                    clearInterval(timerInterval);
+                    alert('Time is up!');
+                    // Handle what happens when the timer runs out
+                }
+                timerElement.textContent = timer;
+                
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQuestion(currentQuestionIndex);
+            startTimer();
+        });
+    </script>
+</body>
+</html>

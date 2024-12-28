@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizBeez</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <!-- **Other header stuffs here** -->
+        <div class="nav-section">
+          <img src="files/left-arrow.png" alt="back" class="menu-icon back">
+          <img src="files/menu.png" alt="menu" class="menu-icon menu">
+        </div>
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+        <div class="circle circle-4"></div>
+    </header>
+    <div class="container">
+      <div class="quiz-header">
+        <div class="timer" id="timer">30</div>
+        <div class="answers-details">
+          <div class="correct-marker marker">
+              <p class="counter">01</p>
+              <div class="progress-bar"></div>
+          </div>
+          <div class="wrong-marker marker">
+            <div class="progress-bar"></div>
+              <p class="counter">02</p>
+          </div>
+        </div>
+        <div class="question-count" id="question-count">Question 1/10</div>
+        <div class="question" id="question">What is the capital of France?</div>
+      </div>
+      <div class="choices">
+        <ul class="choice-list" id="choices">
+            <li class="choice">Berlin <img src="files/check.png" alt="icon" class="icon correct"></li>
+            <li class="choice">Madrid <img src="files/check.png" alt="icon" class="icon no-answer"></li>
+            <li class="choice">Paris <img src="files/wrong.png" alt="icon" class="icon wrong"></li>
+            <li class="choice">Rome <img src="files/check.png" alt="icon" class="icon no-answer"></li>
+        </ul>
+        <!-- <div class="button-container">
+            <button class="button" id="prev-btn">Previous</button>
+            <button class="button" id="next-btn">Next</button>
+        </div> -->
+      </div>
+      <a href="quiz_result.html">next page</a>
+    </div>
+
+    <script>
+       
+    </script>
+</body>
+</html>
+
+
+<!-- https://www.flaticon.com/ -->
