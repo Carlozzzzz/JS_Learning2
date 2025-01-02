@@ -53,6 +53,7 @@ const timerEle = document.getElementById('timer');
 let currentQuestionIndex = 0;
 let timer = 0;
 let timerInterval; // expected value is setInterval()
+let nextQuestionCountdown = 0;
 
 
 // List of question, change it as you see fit, either from API or database
@@ -138,24 +139,44 @@ const userAnswers = [];
 // by answering will only proceed to next question
 
 
-const awaitNextQuestion = () => {
+const answerTimeout = (countdown = 3) => {
 	
 	// assign the value for timer e.g : 3 sec
 	// create a setInterval funtion, then if the timer is == 0, proceed the next question, else continue to count
 	
-	timer = 1;
-	
 	timerInterval = setInterval(() => {
-		timer--;
-		// console.log(`Running: ${timer}`)
+		countdown--;
 	
-		if(timer <= 1) {
+		if(countdown <= 1) {
+		
+			
 			clearInterval(timerInterval);
 			currentQuestionIndex++;
 			populateQuestion();
 		}
 		
-	}, 10);
+	}, 1000);
+};
+
+const nextQuestionTimer = (countdown) => {
+
+	const tempCountdown = countdown;
+	
+	if (currentQuestionIndex > questions.length) return false;
+	
+	timerInterval = setInterval(() => {
+		timerEle.textContent = countdown;
+		countdown--;
+		
+		if(countdown <= 0) {
+		
+			countdown = tempCountdown;
+			clearInterval(timerInterval);
+			currentQuestionIndex++;
+			populateQuestion();
+		}
+		
+	}, 1000);
 };
 
 
@@ -195,7 +216,12 @@ const populateQuestion = () => {
 	// add click event on each choices
 	const choiceEvent = choiceListEle.querySelectorAll('.choice');
 
+	// start the countdown for answering the question
+	// nextQuestionTimer(2);
+	
 	choiceEvent.forEach(ele => {
+	
+	
 		ele.addEventListener('click', () => {
 			const img = ele.querySelector('img');
 			
@@ -227,8 +253,7 @@ const populateQuestion = () => {
 			
 			userAnswers.push(userAnswerDetails);
 			
-			awaitNextQuestion();
-			
+			answerTimeout();
 		});
 	});
 
