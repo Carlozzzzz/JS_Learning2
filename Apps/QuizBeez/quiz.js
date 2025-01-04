@@ -51,8 +51,10 @@ const choiceListEle = document.getElementById('choices');
 const timerEle = document.getElementById('timer');
 
 let currentQuestionIndex = 0;
-let timer = 0;
+let timeControl; // hold object
+let timer = 2;
 let timerInterval; // expected value is setInterval()
+let answerTimerInterval; // expected value is setInterval()
 let nextQuestionCountdown = 0;
 
 
@@ -120,8 +122,7 @@ const questions = [
   }
 ];
 
-
-// dynamic array for user answer
+const userAnswers = [];
 /**
  * 
  const test = [
@@ -131,48 +132,71 @@ const questions = [
     }
  ];
  */
-const userAnswers = [];
-
-// populate questionnaire
-
-// need to get the first questionnaire
-// by answering will only proceed to next question
 
 
-const answerTimeout = (countdown = 3) => {
+const startQuestionTimer = async (countdown) => {
+
+  if (currentQuestionIndex >= questions.length) {
+    // process the resuls here
+    timerEle.innerHTML = `Time's up.`
+    
+    return false;
+  }
   
-  // assign the value for timer e.g : 3 sec
-  // create a setInterval funtion, then if the timer is == 0, proceed the next question, else continue to count
+  timerEle.textContent = countdown;
   
-  timerInterval = setInterval(() => {
+  clearInterval(timerInterval);
+  
+  timerInterval = setInterval(async () => {
     countdown--;
+    
+    timerEle.textContent = countdown;
   
     if(countdown <= 1) {
-    
+      const choicesEle = document.querySelectorAll('.choice')
+      const correctAnswer = questions[currentQuestionIndex].correct;
       
+      animateCorrectAnswer(choicesEle, correctAnswer);
       clearInterval(timerInterval);
-      currentQuestionIndex++;
+      await answerTimeout();
       processQuestion();
     }
-    
   }, 1000);
-};
 
-const nextQuestionTimer = (countdown) => {
 
-  const tempCountdown = countdown;
-  
-  if (currentQuestionIndex > questions.length) return false;
-  
-  // capture the question index
-  // run the coundown
-  // if countdown == 0, display the next question
-  
-  
 };
 
 
-const processQuestion = () => {
+const answerTimeout = () => {
+  let countdown = 2;
+  return new Promise((resolve) => {
+    const answerTimerInterval = setInterval(() => {
+      countdown--;
+      if (countdown <= 1) {
+        clearInterval(answerTimerInterval);
+        currentQuestionIndex++;
+        
+        if(currentQuestionIndex >= questions.length) {
+          timerEle.textContent = 'Finished'
+          console.log(currentQuestionIndex)
+        }
+        
+        resolve();  // Resolve the promise when countdown is finished
+      }
+    }, 1000);
+  });
+};
+
+const animateCorrectAnswer = (choicesEle, correctAnswer) => {
+  choicesEle.forEach(choice => {
+    if(choice.textContent == correctAnswer) {
+      choice.querySelector('img').classList.add('correct')
+      choice.classList.add('correct-effect');
+    }
+  });
+};
+
+const processQuestion = async() => {
 
   if(currentQuestionIndex < 0) return false;
   
@@ -181,58 +205,6 @@ const processQuestion = () => {
     return false;
   }
   
-  displayQuestion();
-  
-  // add click event on each choices
-  const choiceEvent = choiceListEle.querySelectorAll('.choice');
-
-  // start the countdown for answering the question
-  // nextQuestionTimer(2);
-  
-  choiceEvent.forEach(ele => {
-    const currentQuestion = questions[currentQuestionIndex];
-  
-    ele.addEventListener('click', () => {
-      const img = ele.querySelector('img');
-      
-      // start counter here
-      // when reach the treshold, display next question
-      
-      const currentAnswer = ele.textContent;
-      let isCorrect = false;
-      if(currentQuestion.correct === currentAnswer){
-          console.log('correct');
-          isCorrect = true;
-          img.src = 'files/check.png';
-          img.classList.add('correct');
-      }
-      else {
-          console.log('may mali garrrrr');
-          img.src = 'files/wrong.png';
-          img.classList.add('wrong')
-      }
-      
-      ele.classList.add('choice-clicked');
-      // ele.classList.add('disable-pointer');
-      choiceEvent.forEach(choice => choice.style.pointerEvents = 'none');
-      
-      // update the user anwer
-      // wait for 3 seconds then proceed to next question
-      const userAnswerDetails = {
-        id: currentQuestion.id,
-        answer: currentAnswer,
-        isCorrect: isCorrect
-      };
-      
-      userAnswers.push(userAnswerDetails);
-      
-      answerTimeout();
-    });
-  });
-
-};
-
-function displayQuestion() {
   questionIndexEle.textContent = currentQuestionIndex + 1;
   questionCountEle.textContent = questions.length;
   
@@ -255,7 +227,59 @@ function displayQuestion() {
     
     choiceListEle.append(li)
   });
-}
+  
+  startQuestionTimer(timer);
+  
+  // add click event on each choices
+  const choiceEvent = choiceListEle.querySelectorAll('.choice');
+  
+  choiceEvent.forEach(ele => {
+    const currentQuestion = questions[currentQuestionIndex];
+    const correctAnswer = currentQuestion.correct;
+  
+    ele.addEventListener('click', async() => {
+      const img = ele.querySelector('img');
+      
+      const currentAnswer = ele.textContent;
+      let isCorrect = false;
+      if(correctAnswer === currentAnswer){
+          console.log('correct');
+          ele.classList.add('correct-effect');
+          isCorrect = true;
+          img.src = 'files/check.png';
+          img.classList.add('correct');
+      }
+      else {
+          console.log('may mali garrrrr');
+          
+          animateCorrectAnswer(choiceEvent, correctAnswer);
+          
+          img.src = 'files/wrong.png';
+          img.classList.add('wrong')
+      }
+      
+      ele.classList.add('choice-clicked');
+      choiceEvent.forEach(choice => choice.style.pointerEvents = 'none'); // disable the pointer event to avoid duplicate answer
+      
+      // update the user anwer
+      const userAnswerDetails = {
+        id: currentQuestion.id,
+        answer: currentAnswer,
+        isCorrect: isCorrect
+      };
+
+      clearInterval(timerInterval);
+      
+      userAnswers.push(userAnswerDetails);
+      await answerTimeout();
+      console.log(userAnswers)
+      processQuestion();
+      // repopulate the question here==========================================================
+    });
+    
+  });
+};
+
 
 
 // run the app
