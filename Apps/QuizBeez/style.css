@@ -43,6 +43,15 @@ body {
     animation: grow-shrink .8s infinite ease-in-out;
 }
 
+@keyframes grow-shrink {
+  0%, 100% {
+      transform: scale(.99); /* Normal size */
+  }
+  50% {
+      transform: scale(1.02); /* Bigger size */
+  }
+}
+
 
 /* Header */
 .header {

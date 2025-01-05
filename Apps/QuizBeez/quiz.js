@@ -49,13 +49,25 @@ const questionCountEle = document.getElementById('question_count');
 const questionEle = document.getElementById('question');
 const choiceListEle = document.getElementById('choices');
 const timerEle = document.getElementById('timer');
+const correctCounterEle = document.getElementById('correctAnsCounter');
+const wrongCounterEle = document.getElementById('wrongAnsCounter');
+
+const TIMER_DURATION = 10;
+const ANSWER_DELAY = 1;
 
 let currentQuestionIndex = 0;
+let currentAnswer;
 let timeControl; // hold object
-let timer = 2;
 let timerInterval; // expected value is setInterval()
 let answerTimerInterval; // expected value is setInterval()
 let nextQuestionCountdown = 0;
+let correctAnswerCount = 0;
+let wrongAnswerCount = 0;
+let isCorrect = false;
+
+// sessionStorage.setItem('quizProgress', 'test');
+// const storeProgress = sessionStorage.getItem('quizProgress');
+// console.log('Session: ', storeProgress)
 
 
 // List of question, change it as you see fit, either from API or database
@@ -143,6 +155,10 @@ const startQuestionTimer = async (countdown) => {
     return false;
   }
   
+  if(sessionStorage.getItem('TIMER_DURATION')) {
+    countdown = sessionStorage.getItem('TIMER_DURATION')
+  }
+  
   timerEle.textContent = countdown;
   
   clearInterval(timerInterval);
@@ -150,14 +166,33 @@ const startQuestionTimer = async (countdown) => {
   timerInterval = setInterval(async () => {
     countdown--;
     
+    sessionStorage.setItem('TIMER_DURATION', countdown);
+    const test = sessionStorage.getItem('TIMER_DURATION');
+    console.log(test)
+    
     timerEle.textContent = countdown;
   
     if(countdown <= 1) {
       const choicesEle = document.querySelectorAll('.choice')
-      const correctAnswer = questions[currentQuestionIndex].correct;
+      const currentQuestion = questions[currentQuestionIndex];
+      const correctAnswer = currentQuestion.correct;
       
-      animateCorrectAnswer(choicesEle, correctAnswer);
       clearInterval(timerInterval);
+      sessionStorage.removeItem('TIMER_DURATION');
+      
+      isCorrect = false;
+      wrongAnswerCount++;
+      
+      const userAnswerDetails = {
+        id: currentQuestion.id,
+        answer: '',
+        isCorrect: isCorrect
+      };
+
+      userAnswers.push(userAnswerDetails);
+      
+      displayAnswer(choicesEle, correctAnswer);
+      
       await answerTimeout();
       processQuestion();
     }
@@ -168,17 +203,22 @@ const startQuestionTimer = async (countdown) => {
 
 
 const answerTimeout = () => {
-  let countdown = 2;
+  let countdown = ANSWER_DELAY;
   return new Promise((resolve) => {
     const answerTimerInterval = setInterval(() => {
       countdown--;
+      
       if (countdown <= 1) {
         clearInterval(answerTimerInterval);
         currentQuestionIndex++;
         
+        // update the wrong count element here
+        
+        
         if(currentQuestionIndex >= questions.length) {
           timerEle.textContent = 'Finished'
           console.log(currentQuestionIndex)
+          sessionStorage.removeItem('TIMER_DURATION');
         }
         
         resolve();  // Resolve the promise when countdown is finished
@@ -187,7 +227,12 @@ const answerTimeout = () => {
   });
 };
 
-const animateCorrectAnswer = (choicesEle, correctAnswer) => {
+const displayAnswer = (choicesEle, correctAnswer) => {
+
+  isCorrect ? (correctCounterEle.innerHTML = correctAnswerCount) : (wrongCounterEle.innerHTML = wrongAnswerCount);
+  sessionStorage.removeItem('TIMER_DURATION');
+  console.log(isCorrect)
+  
   choicesEle.forEach(choice => {
     if(choice.textContent == correctAnswer) {
       choice.querySelector('img').classList.add('correct')
@@ -202,6 +247,7 @@ const processQuestion = async() => {
   
   if(currentQuestionIndex >= questions.length) {
     console.log('Finished: ', userAnswers);
+    sessionStorage.removeItem('TIMER_DURATION');
     return false;
   }
   
@@ -228,7 +274,7 @@ const processQuestion = async() => {
     choiceListEle.append(li)
   });
   
-  startQuestionTimer(timer);
+  startQuestionTimer(TIMER_DURATION);
   
   // add click event on each choices
   const choiceEvent = choiceListEle.querySelectorAll('.choice');
@@ -240,23 +286,25 @@ const processQuestion = async() => {
     ele.addEventListener('click', async() => {
       const img = ele.querySelector('img');
       
-      const currentAnswer = ele.textContent;
-      let isCorrect = false;
+      currentAnswer = ele.textContent;
+      
       if(correctAnswer === currentAnswer){
           console.log('correct');
           ele.classList.add('correct-effect');
           isCorrect = true;
+          correctAnswerCount++;
           img.src = 'files/check.png';
           img.classList.add('correct');
       }
       else {
           console.log('may mali garrrrr');
-          
-          animateCorrectAnswer(choiceEvent, correctAnswer);
-          
+          isCorrect = false;
+          wrongAnswerCount++;
           img.src = 'files/wrong.png';
           img.classList.add('wrong')
       }
+        
+      displayAnswer(choiceEvent, correctAnswer);
       
       ele.classList.add('choice-clicked');
       choiceEvent.forEach(choice => choice.style.pointerEvents = 'none'); // disable the pointer event to avoid duplicate answer
@@ -284,3 +332,4 @@ const processQuestion = async() => {
 
 // run the app
 processQuestion();
+

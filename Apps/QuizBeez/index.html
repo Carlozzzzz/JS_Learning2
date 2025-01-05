@@ -23,12 +23,12 @@
         <div class="timer" id="timer">30</div>
         <div class="answers-details">
           <div class="correct-marker marker">
-              <p class="counter">01</p>
+              <p class="correct-ans-counter counter" id="correctAnsCounter">00</p>
               <div class="progress-bar"></div>
           </div>
           <div class="wrong-marker marker">
             <div class="progress-bar"></div>
-              <p class="counter">02</p>
+              <p class="wrong-ans-counter counter" id="wrongAnsCounter">00</p>
           </div>
         </div>
         <div class="question-range" id="question_range">Question <span id="question_index" data="1">1</span>/<span id="question_count" data="1">1</span></div>
@@ -49,7 +49,8 @@
       <a href="quiz_result.html">next page</a>
     </div>
 
-    <script src="quiz.js"></script>
+    <script src="main.js" type="module"></script>
+    <script src="quiz.js" type="module"></script>
 </body>
 </html>
 
