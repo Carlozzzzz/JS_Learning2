@@ -52,14 +52,12 @@ const timerEle = document.getElementById('timer');
 const correctCounterEle = document.getElementById('correctAnsCounter');
 const wrongCounterEle = document.getElementById('wrongAnsCounter');
 
-const TIMER_DURATION = 10;
+const TIMER_DURATION = 5;
 const ANSWER_DELAY = 1;
 
 let currentQuestionIndex = 0;
 let currentAnswer;
-let timeControl; // hold object
 let timerInterval; // expected value is setInterval()
-let answerTimerInterval; // expected value is setInterval()
 let nextQuestionCountdown = 0;
 let correctAnswerCount = 0;
 let wrongAnswerCount = 0;
@@ -84,54 +82,54 @@ const questions = [
     choices: ['Vienna', 'Berlin', 'Warsaw', 'Prague'],
     correct: 'Berlin'
   },
-  {
-    id: 'xmnv82314klhf',
-    question: 'What is the capital of Spain?',
-    choices: ['Lisbon', 'Madrid', 'Barcelona', 'Seville'],
-    correct: 'Madrid'
-  },
-  {
-    id: 'cnbvq12837gdh',
-    question: 'What is the capital of Italy?',
-    choices: ['Venice', 'Florence', 'Rome', 'Milan'],
-    correct: 'Rome'
-  },
-  {
-    id: 'asdy72364fjdn',
-    question: 'What is the capital of Portugal?',
-    choices: ['Lisbon', 'Porto', 'Madrid', 'Valencia'],
-    correct: 'Lisbon'
-  },
-  {
-    id: 'plak32190fhdn',
-    question: 'What is the capital of the United Kingdom?',
-    choices: ['Dublin', 'Edinburgh', 'London', 'Manchester'],
-    correct: 'London'
-  },
-  {
-    id: 'mbv34287lska',
-    question: 'What is the capital of Russia?',
-    choices: ['Saint Petersburg', 'Moscow', 'Kazan', 'Sochi'],
-    correct: 'Moscow'
-  },
-  {
-    id: 'qlwo12345hgnf',
-    question: 'What is the capital of Japan?',
-    choices: ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya'],
-    correct: 'Tokyo'
-  },
-  {
-    id: 'zxpl90381sklh',
-    question: 'What is the capital of Australia?',
-    choices: ['Sydney', 'Melbourne', 'Canberra', 'Brisbane'],
-    correct: 'Canberra'
-  },
-  {
-    id: 'trzn10293hkls',
-    question: 'What is the capital of Canada?',
-    choices: ['Toronto', 'Ottawa', 'Vancouver', 'Montreal'],
-    correct: 'Ottawa'
-  }
+  // {
+  //   id: 'xmnv82314klhf',
+  //   question: 'What is the capital of Spain?',
+  //   choices: ['Lisbon', 'Madrid', 'Barcelona', 'Seville'],
+  //   correct: 'Madrid'
+  // },
+  // {
+  //   id: 'cnbvq12837gdh',
+  //   question: 'What is the capital of Italy?',
+  //   choices: ['Venice', 'Florence', 'Rome', 'Milan'],
+  //   correct: 'Rome'
+  // },
+  // {
+  //   id: 'asdy72364fjdn',
+  //   question: 'What is the capital of Portugal?',
+  //   choices: ['Lisbon', 'Porto', 'Madrid', 'Valencia'],
+  //   correct: 'Lisbon'
+  // },
+  // {
+  //   id: 'plak32190fhdn',
+  //   question: 'What is the capital of the United Kingdom?',
+  //   choices: ['Dublin', 'Edinburgh', 'London', 'Manchester'],
+  //   correct: 'London'
+  // },
+  // {
+  //   id: 'mbv34287lska',
+  //   question: 'What is the capital of Russia?',
+  //   choices: ['Saint Petersburg', 'Moscow', 'Kazan', 'Sochi'],
+  //   correct: 'Moscow'
+  // },
+  // {
+  //   id: 'qlwo12345hgnf',
+  //   question: 'What is the capital of Japan?',
+  //   choices: ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya'],
+  //   correct: 'Tokyo'
+  // },
+  // {
+  //   id: 'zxpl90381sklh',
+  //   question: 'What is the capital of Australia?',
+  //   choices: ['Sydney', 'Melbourne', 'Canberra', 'Brisbane'],
+  //   correct: 'Canberra'
+  // },
+  // {
+  //   id: 'trzn10293hkls',
+  //   question: 'What is the capital of Canada?',
+  //   choices: ['Toronto', 'Ottawa', 'Vancouver', 'Montreal'],
+  //   correct: 'Ottawa'
+  // }
 ];
 
 const userAnswers = [];
@@ -145,6 +143,44 @@ const userAnswers = [];
  ];
  */
 
+const saveUserAnswer = () => {
+  const userAnswerDetails = {
+    id: questions[currentQuestionIndex].id,
+    answer: currentAnswer ?? '',
+    isCorrect: isCorrect
+  };
+  userAnswers.push(userAnswerDetails);
+}
+
+const answerTimeout = (correctAnswer) => {
+  let countdown = ANSWER_DELAY;
+  return new Promise((resolve) => {
+  
+    saveUserAnswer(); // make sure to save the user before incrementing the question index
+  
+    currentQuestionIndex++;
+    displayAnswer(correctAnswer)
+  
+    const answerTimerInterval = setInterval(() => {
+      countdown--;
+      
+      if (countdown <= 1) {
+        clearInterval(answerTimerInterval);
+        sessionStorage.removeItem('TIMER_DURATION');
+        
+
+        if(currentQuestionIndex >= questions.length) {
+          timerEle.textContent = 'Finished'
+        }
+        
+        // update the wrong count element here
+        resolve();  // Resolve the promise when countdown is finished
+      }
+      
+      
+    }, 1000);
+  });
+};
 
 const startQuestionTimer = async (countdown) => {
 
@@ -173,27 +209,16 @@ const startQuestionTimer = async (countdown) => {
     timerEle.textContent = countdown;
   
     if(countdown <= 1) {
-      const choicesEle = document.querySelectorAll('.choice')
-      const currentQuestion = questions[currentQuestionIndex];
+      const currentQuestion =  questions[currentQuestionIndex];
       const correctAnswer = currentQuestion.correct;
       
       clearInterval(timerInterval);
-      sessionStorage.removeItem('TIMER_DURATION');
-      
+
       isCorrect = false;
       wrongAnswerCount++;
       
-      const userAnswerDetails = {
-        id: currentQuestion.id,
-        answer: '',
-        isCorrect: isCorrect
-      };
-
-      userAnswers.push(userAnswerDetails);
+      await answerTimeout(correctAnswer);
       
-      displayAnswer(choicesEle, correctAnswer);
-      
-      await answerTimeout();
       processQuestion();
     }
   }, 1000);
@@ -202,52 +227,53 @@ const startQuestionTimer = async (countdown) => {
 };
 
 
-const answerTimeout = () => {
-  let countdown = ANSWER_DELAY;
-  return new Promise((resolve) => {
-    const answerTimerInterval = setInterval(() => {
-      countdown--;
-      
-      if (countdown <= 1) {
-        clearInterval(answerTimerInterval);
-        currentQuestionIndex++;
-        
-        // update the wrong count element here
-        
-        
-        if(currentQuestionIndex >= questions.length) {
-          timerEle.textContent = 'Finished'
-          console.log(currentQuestionIndex)
-          sessionStorage.removeItem('TIMER_DURATION');
-        }
-        
-        resolve();  // Resolve the promise when countdown is finished
-      }
-    }, 1000);
-  });
-};
+const choicesClickEvent = () => {
+  const choiceEvent = choiceListEle.querySelectorAll('.choice');
 
-const displayAnswer = (choicesEle, correctAnswer) => {
-
-  isCorrect ? (correctCounterEle.innerHTML = correctAnswerCount) : (wrongCounterEle.innerHTML = wrongAnswerCount);
-  sessionStorage.removeItem('TIMER_DURATION');
-  console.log(isCorrect)
+  choiceEvent.forEach(ele => {
+    const currentQuestion = questions[currentQuestionIndex];
+    const correctAnswer = currentQuestion.correct;
+    
   
-  choicesEle.forEach(choice => {
-    if(choice.textContent == correctAnswer) {
-      choice.querySelector('img').classList.add('correct')
-      choice.classList.add('correct-effect');
-    }
+    ele.addEventListener('click', async() => {
+      const img = ele.querySelector('img');
+      
+      currentAnswer = ele.textContent;
+      
+      clearInterval(timerInterval); // resetting the timer for answer display
+      
+      if(correctAnswer === currentAnswer){
+          console.log('correct');
+          ele.classList.add('correct-effect');
+          isCorrect = true;
+          correctAnswerCount++;
+          img.src = 'files/check.png';
+          img.classList.add('correct');
+      }
+      else {
+          console.log('may mali garrrrr');
+          isCorrect = false;
+          wrongAnswerCount++;
+          img.src = 'files/wrong.png';
+          img.classList.add('wrong')
+      }
+        
+      ele.classList.add('choice-clicked');
+      choiceEvent.forEach(choice => choice.style.pointerEvents = 'none'); // disable the pointer event to avoid duplicate answer
+      
+      await answerTimeout(correctAnswer);
+      processQuestion();
+    });
+    
   });
-};
 
+};
 const processQuestion = async() => {
 
   if(currentQuestionIndex < 0) return false;
   
   if(currentQuestionIndex >= questions.length) {
     console.log('Finished: ', userAnswers);
-    sessionStorage.removeItem('TIMER_DURATION');
     return false;
   }
   
@@ -277,59 +303,31 @@ const processQuestion = async() => {
   startQuestionTimer(TIMER_DURATION);
   
   // add click event on each choices
-  const choiceEvent = choiceListEle.querySelectorAll('.choice');
   
-  choiceEvent.forEach(ele => {
-    const currentQuestion = questions[currentQuestionIndex];
-    const correctAnswer = currentQuestion.correct;
-  
-    ele.addEventListener('click', async() => {
-      const img = ele.querySelector('img');
-      
-      currentAnswer = ele.textContent;
-      
-      if(correctAnswer === currentAnswer){
-          console.log('correct');
-          ele.classList.add('correct-effect');
-          isCorrect = true;
-          correctAnswerCount++;
-          img.src = 'files/check.png';
-          img.classList.add('correct');
-      }
-      else {
-          console.log('may mali garrrrr');
-          isCorrect = false;
-          wrongAnswerCount++;
-          img.src = 'files/wrong.png';
-          img.classList.add('wrong')
-      }
-        
-      displayAnswer(choiceEvent, correctAnswer);
-      
-      ele.classList.add('choice-clicked');
-      choiceEvent.forEach(choice => choice.style.pointerEvents = 'none'); // disable the pointer event to avoid duplicate answer
-      
-      // update the user anwer
-      const userAnswerDetails = {
-        id: currentQuestion.id,
-        answer: currentAnswer,
-        isCorrect: isCorrect
-      };
-
-      clearInterval(timerInterval);
-      
-      userAnswers.push(userAnswerDetails);
-      await answerTimeout();
-      console.log(userAnswers)
-      processQuestion();
-      // repopulate the question here==========================================================
-    });
-    
-  });
+  choicesClickEvent();
 };
 
 
+// Helpers
+
+function displayAnswer(correctAnswer) {
+
+  const choicesEle = document.querySelectorAll('.choice');
+  
+  console.log('Test displayAnswer: ', choicesEle)
+  console.log(correctAnswer)
+  
+  isCorrect ? (correctCounterEle.innerHTML = correctAnswerCount) : (wrongCounterEle.innerHTML = wrongAnswerCount);
+
+  choicesEle.forEach(choice => {
+    if(choice.textContent == correctAnswer) {
+      choice.querySelector('img').classList.add('correct')
+      choice.classList.add('correct-effect');
+    }
+    
+    choice.style.pointerEvents = 'none';
+  });
+};
 
 // run the app
 processQuestion();
-
