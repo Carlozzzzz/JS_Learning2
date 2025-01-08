@@ -63,11 +63,6 @@ let correctAnswerCount = 0;
 let wrongAnswerCount = 0;
 let isCorrect = false;
 
-// sessionStorage.setItem('quizProgress', 'test');
-// const storeProgress = sessionStorage.getItem('quizProgress');
-// console.log('Session: ', storeProgress)
-
-
 // List of question, change it as you see fit, either from API or database
 const questions = [
   {
@@ -82,12 +77,12 @@ const questions = [
     choices: ['Vienna', 'Berlin', 'Warsaw', 'Prague'],
     correct: 'Berlin'
   },
-  // {
-  //   id: 'xmnv82314klhf',
-  //   question: 'What is the capital of Spain?',
-  //   choices: ['Lisbon', 'Madrid', 'Barcelona', 'Seville'],
-  //   correct: 'Madrid'
-  // },
+  {
+    id: 'xmnv82314klhf',
+    question: 'What is the capital of Spain?',
+    choices: ['Lisbon', 'Madrid', 'Barcelona', 'Seville'],
+    correct: 'Madrid'
+  },
   // {
   //   id: 'cnbvq12837gdh',
   //   question: 'What is the capital of Italy?',
@@ -159,14 +154,19 @@ const answerTimeout = (correctAnswer) => {
     saveUserAnswer(); // make sure to save the user before incrementing the question index
   
     currentQuestionIndex++;
-    displayAnswer(correctAnswer)
   
     const answerTimerInterval = setInterval(() => {
       countdown--;
       
       if (countdown <= 1) {
         clearInterval(answerTimerInterval);
-        sessionStorage.removeItem('TIMER_DURATION');
+        
+        if(!(currentQuestionIndex >= questions.length)) {
+          sessionStorage.removeItem('TIMER_DURATION');
+          sessionStorage.removeItem('CURRENT_QUESTION_INDEX');
+        }
+        
+    displayAnswer(correctAnswer)
         
 
         if(currentQuestionIndex >= questions.length) {
@@ -184,6 +184,8 @@ const answerTimeout = (correctAnswer) => {
 
 const startQuestionTimer = async (countdown) => {
 
+  
+  
   if (currentQuestionIndex >= questions.length) {
     // process the resuls here
     timerEle.innerHTML = `Time's up.`
@@ -192,19 +194,17 @@ const startQuestionTimer = async (countdown) => {
   }
   
   if(sessionStorage.getItem('TIMER_DURATION')) {
-    countdown = sessionStorage.getItem('TIMER_DURATION')
-  }
+    countdown = parseInt(sessionStorage.getItem('TIMER_DURATION'))
+  } 
   
   timerEle.textContent = countdown;
   
+  
   clearInterval(timerInterval);
   
-  timerInterval = setInterval(async () => {
+  timerInterval = setInterval( async () => {
     countdown--;
-    
     sessionStorage.setItem('TIMER_DURATION', countdown);
-    const test = sessionStorage.getItem('TIMER_DURATION');
-    console.log(test)
     
     timerEle.textContent = countdown;
   
@@ -222,10 +222,12 @@ const startQuestionTimer = async (countdown) => {
       processQuestion();
     }
   }, 1000);
+  
+  
+  
 
 
 };
-
 
 const choicesClickEvent = () => {
   const choiceEvent = choiceListEle.querySelectorAll('.choice');
@@ -268,6 +270,7 @@ const choicesClickEvent = () => {
   });
 
 };
+
 const processQuestion = async() => {
 
   if(currentQuestionIndex < 0) return false;
@@ -276,6 +279,10 @@ const processQuestion = async() => {
     console.log('Finished: ', userAnswers);
     return false;
   }
+  
+  if(sessionStorage.getItem('CURRENT_QUESTION_INDEX')) {
+    currentQuestionIndex = parseInt(sessionStorage.getItem('CURRENT_QUESTION_INDEX'))
+  } else sessionStorage.setItem('CURRENT_QUESTION_INDEX', currentQuestionIndex);
   
   questionIndexEle.textContent = currentQuestionIndex + 1;
   questionCountEle.textContent = questions.length;
@@ -314,8 +321,8 @@ function displayAnswer(correctAnswer) {
 
   const choicesEle = document.querySelectorAll('.choice');
   
-  console.log('Test displayAnswer: ', choicesEle)
-  console.log(correctAnswer)
+  // console.log('Test displayAnswer: ', choicesEle)
+  // console.log(correctAnswer)
   
   isCorrect ? (correctCounterEle.innerHTML = correctAnswerCount) : (wrongCounterEle.innerHTML = wrongAnswerCount);
 
