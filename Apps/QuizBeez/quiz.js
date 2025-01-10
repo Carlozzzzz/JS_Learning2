@@ -127,7 +127,7 @@ const questions = [
   // }
 ];
 
-const userAnswers = [];
+let userAnswers = [];
 /**
  * 
  const test = [
@@ -145,6 +145,7 @@ const saveUserAnswer = () => {
     isCorrect: isCorrect
   };
   userAnswers.push(userAnswerDetails);
+  localStorage.setItem('USER_ANSWER_DETAILS', JSON.stringify(userAnswers)); // reupdate the user answers array everytime the answer is being change
 }
 
 const answerTimeout = (correctAnswer) => {
@@ -154,28 +155,23 @@ const answerTimeout = (correctAnswer) => {
     saveUserAnswer(); // make sure to save the user before incrementing the question index
   
     currentQuestionIndex++;
+    displayAnswer(correctAnswer)
   
     const answerTimerInterval = setInterval(() => {
-      countdown--;
       
       if (countdown <= 1) {
         clearInterval(answerTimerInterval);
         
-        if(!(currentQuestionIndex >= questions.length)) {
-          sessionStorage.removeItem('TIMER_DURATION');
-          sessionStorage.removeItem('CURRENT_QUESTION_INDEX');
-        }
+        sessionStorage.removeItem('TIMER_DURATION');
+        sessionStorage.removeItem('CURRENT_QUESTION_INDEX');
         
-    displayAnswer(correctAnswer)
-        
-
         if(currentQuestionIndex >= questions.length) {
           timerEle.textContent = 'Finished'
         }
         
-        // update the wrong count element here
         resolve();  // Resolve the promise when countdown is finished
       }
+      countdown--;
       
       
     }, 1000);
@@ -184,20 +180,14 @@ const answerTimeout = (correctAnswer) => {
 
 const startQuestionTimer = async (countdown) => {
 
-  
-  
-  if (currentQuestionIndex >= questions.length) {
-    // process the resuls here
-    timerEle.innerHTML = `Time's up.`
-    
-    return false;
-  }
+  if (currentQuestionIndex >= questions.length) return false;
   
   if(sessionStorage.getItem('TIMER_DURATION')) {
     countdown = parseInt(sessionStorage.getItem('TIMER_DURATION'))
   } 
   
-  timerEle.textContent = countdown;
+  if(countdown <= 1) timerEle.textContent = 1;
+  else timerEle.textContent = countdown;
   
   
   clearInterval(timerInterval);
@@ -205,9 +195,13 @@ const startQuestionTimer = async (countdown) => {
   timerInterval = setInterval( async () => {
     countdown--;
     sessionStorage.setItem('TIMER_DURATION', countdown);
+    console.log(countdown);
     
-    timerEle.textContent = countdown;
-  
+    if(countdown <= 1) timerEle.textContent = 1;
+    else timerEle.textContent = countdown;
+    
+    
+    
     if(countdown <= 1) {
       const currentQuestion =  questions[currentQuestionIndex];
       const correctAnswer = currentQuestion.correct;
@@ -273,9 +267,14 @@ const choicesClickEvent = () => {
 
 const processQuestion = async() => {
 
-  if(currentQuestionIndex < 0) return false;
+  userAnswers = JSON.parse(localStorage.getItem('USER_ANSWER_DETAILS')) || [];
+
+  if(currentQuestionIndex < 0 || userAnswers.length >= questions.length) return false;
   
   if(currentQuestionIndex >= questions.length) {
+    const fromLocalStorage = localStorage.getItem('USER_ANSWER_DETAILS')
+    const parsedObject = JSON.parse(fromLocalStorage);
+    console.log('Finished: ', parsedObject);
     console.log('Finished: ', userAnswers);
     return false;
   }
