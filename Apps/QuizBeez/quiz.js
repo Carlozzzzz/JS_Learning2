@@ -148,6 +148,22 @@ const saveUserAnswer = () => {
   localStorage.setItem('USER_ANSWER_DETAILS', JSON.stringify(userAnswers)); // reupdate the user answers array everytime the answer is being change
 }
 
+const displayAnswer = (correctAnswer)=>  {
+
+  const choicesEle = document.querySelectorAll('.choice');
+  
+  isCorrect ? (correctCounterEle.innerHTML = correctAnswerCount) : (wrongCounterEle.innerHTML = wrongAnswerCount);
+
+  choicesEle.forEach(choice => {
+    if(choice.textContent == correctAnswer) {
+      choice.querySelector('img').classList.add('correct')
+      choice.classList.add('correct-effect');
+    }
+    
+    choice.style.pointerEvents = 'none';
+  });
+};
+
 const answerTimeout = (correctAnswer) => {
   let countdown = ANSWER_DELAY;
   return new Promise((resolve) => {
@@ -155,6 +171,8 @@ const answerTimeout = (correctAnswer) => {
     saveUserAnswer(); // make sure to save the user before incrementing the question index
   
     currentQuestionIndex++;
+    sessionStorage.setItem('CURRENT_QUESTION_INDEX', currentQuestionIndex)
+    
     displayAnswer(correctAnswer)
   
     const answerTimerInterval = setInterval(() => {
@@ -163,7 +181,7 @@ const answerTimeout = (correctAnswer) => {
         clearInterval(answerTimerInterval);
         
         sessionStorage.removeItem('TIMER_DURATION');
-        sessionStorage.removeItem('CURRENT_QUESTION_INDEX');
+        // sessionStorage.removeItem('CURRENT_QUESTION_INDEX');
         
         if(currentQuestionIndex >= questions.length) {
           timerEle.textContent = 'Finished'
@@ -195,7 +213,6 @@ const startQuestionTimer = async (countdown) => {
   timerInterval = setInterval( async () => {
     countdown--;
     sessionStorage.setItem('TIMER_DURATION', countdown);
-    console.log(countdown);
     
     if(countdown <= 1) timerEle.textContent = 1;
     else timerEle.textContent = countdown;
@@ -212,15 +229,9 @@ const startQuestionTimer = async (countdown) => {
       wrongAnswerCount++;
       
       await answerTimeout(correctAnswer);
-      
       processQuestion();
     }
   }, 1000);
-  
-  
-  
-
-
 };
 
 const choicesClickEvent = () => {
@@ -268,25 +279,63 @@ const choicesClickEvent = () => {
 const processQuestion = async() => {
 
   userAnswers = JSON.parse(localStorage.getItem('USER_ANSWER_DETAILS')) || [];
+  currentQuestionIndex = parseInt(sessionStorage.getItem('CURRENT_QUESTION_INDEX')) ||  0;
 
-  if(currentQuestionIndex < 0 || userAnswers.length >= questions.length) return false;
-  
-  if(currentQuestionIndex >= questions.length) {
-    const fromLocalStorage = localStorage.getItem('USER_ANSWER_DETAILS')
-    const parsedObject = JSON.parse(fromLocalStorage);
-    console.log('Finished: ', parsedObject);
-    console.log('Finished: ', userAnswers);
+  questionCountEle.textContent = questions.length;
+
+  if(userAnswers.length >= questions.length || currentQuestionIndex >= questions.length || currentQuestionIndex < 0) {
+    console.log('local', userAnswers)
+    // display the last question answer here with the eme eme
+    const lastQuestionAnswer = userAnswers.at(-1);
+    const lastQuestion = questions.at(-1);
+    
+    console.log(lastQuestion)
+    
+    timerEle.textContent = 'Finished'
+    questionIndexEle.textContent = currentQuestionIndex;
+    questionEle.textContent = lastQuestion.question;
+    
+    
+    choiceListEle.innerHTML = '';
+    lastQuestion.choices.forEach( choice  => {
+        
+      const img = document.createElement('img')
+      img.classList.add('icon')
+      img.classList.add('no-answer')
+      img.src = 'files/check.png';
+      
+      const li = document.createElement('li');
+      li.textContent = choice;
+      li.classList.add('choice')
+      
+      if(lastQuestion.correct == choice) {
+        console.log('correct');
+        li.classList.add('correct-effect');
+        isCorrect = true;
+        img.src = 'files/check.png';
+        img.classList.add('correct');
+        // mark the user answer
+      }
+      
+      if(lastQuestionAnswer.answer == choice && lastQuestionAnswer.answer != lastQuestion.correct) {
+        img.classList.add('wrong');
+        img.src = 'files/wrong.png';
+        li.classList.add('choice-clicked');
+      }
+      
+      li.append(img)
+      
+      choiceListEle.append(li)
+      
+    });
+    
     return false;
   }
   
-  if(sessionStorage.getItem('CURRENT_QUESTION_INDEX')) {
-    currentQuestionIndex = parseInt(sessionStorage.getItem('CURRENT_QUESTION_INDEX'))
-  } else sessionStorage.setItem('CURRENT_QUESTION_INDEX', currentQuestionIndex);
+  const currentQuestion = questions[currentQuestionIndex];
   
   questionIndexEle.textContent = currentQuestionIndex + 1;
-  questionCountEle.textContent = questions.length;
   
-  const currentQuestion = questions[currentQuestionIndex];
   questionEle.textContent = currentQuestion.question;
 
   // looping though each choices then populate in on the field
@@ -316,24 +365,7 @@ const processQuestion = async() => {
 
 // Helpers
 
-function displayAnswer(correctAnswer) {
 
-  const choicesEle = document.querySelectorAll('.choice');
-  
-  // console.log('Test displayAnswer: ', choicesEle)
-  // console.log(correctAnswer)
-  
-  isCorrect ? (correctCounterEle.innerHTML = correctAnswerCount) : (wrongCounterEle.innerHTML = wrongAnswerCount);
-
-  choicesEle.forEach(choice => {
-    if(choice.textContent == correctAnswer) {
-      choice.querySelector('img').classList.add('correct')
-      choice.classList.add('correct-effect');
-    }
-    
-    choice.style.pointerEvents = 'none';
-  });
-};
 
 // run the app
 processQuestion();
